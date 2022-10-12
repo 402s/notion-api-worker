@@ -20,6 +20,7 @@
     "webpack-cli": "^3.3.12"
   },
   "dependencies": {
+    "@notionhq/client": "^2.2.1",
     "itty-router": "^2.6.6",
     "wrangler": "^2.1.11"
   }

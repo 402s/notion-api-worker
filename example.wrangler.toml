@@ -3,4 +3,5 @@ main = "src/index.ts"
 
 route = "notion.402.app/api/"
 
-
+[vars]
+API_TOKEN = "example_dev_token"
