@@ -30,7 +30,7 @@ router.post('/callback', async (request: Request) => {
     const code = url.searchParams.get('code')
 });
 
-router.get('/login', () => { return Response.redirect('https://api.notion.com/v1/oauth/authorize?client_id=821734af-9bf0-47d8-bfbd-0c2f14efb15f&response_type=code')
+router.get('/login', () => { return Response.redirect('https://api.notion.com/v1/oauth/authorize?client_id=b29cc2b5-0184-4adb-8b19-60aaf0e859dd&response_type=code')
  });
 
 // Take search request and seperate id and pass to query

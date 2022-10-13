@@ -1,5 +1,6 @@
 name = "notion-cloudflare-worker"
 main = "src/index.ts"
+dev = false
 
 route = "notion.402.app/api/"
 
