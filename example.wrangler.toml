@@ -5,7 +5,7 @@ dev = false
 route = "notion.402.app/api/"
 
 [vars]
-API_TOKEN = "example_dev_token"
+Redirect_URI = "example_Redirect_URI"
 Client_ID = "example_client_id"
 Client_Secret = "example_client_secret"
 
@@ -13,5 +13,6 @@ Client_Secret = "example_client_secret"
 name = "notion-api-worker"
 
 [env.production.vars]
+Redirect_URI = "example_Redirect_URI"
 Client_ID = "example_prod_token"
 Client_Secret = "example_prod_token"

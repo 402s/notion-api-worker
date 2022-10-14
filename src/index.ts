@@ -52,12 +52,13 @@ router.post("/dev/callback", async (request: Request) => {
 });
 
 router.get("/login", () => { 
-    return Response.redirect("https://api.notion.com/v1/oauth/authorize?client_id=b29cc2b5-0184-4adb-8b19-60aaf0e859dd&response_type=code", 301)
+    //@ts-ignore as vars are in wrangler env
+    return Response.redirect(Redirect_URI, 301)
  });
 
 // Take search request and seperate id and pass to query
 router.get("/search", async() => {
-    const notion = new Client({ auth: "secret_ykuAumQjK7GxXmUVaWLWDXzAfwUhHXDhi1nB8cHpA7G" });
+    const notion = new Client({ auth: "" });
     const response = await notion.search({
     query: "",
     sort: {
