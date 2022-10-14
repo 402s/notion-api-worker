@@ -96,12 +96,29 @@ router.get("/search", async({query}) => {
     return new Response(JSON.stringify(response.results));
 })
 
-router.get("/page/:id", async(request: Request) => {
-    const notion = new Client({ auth: "" });
-    const { id } = request.params;
-    const pageId = id;
-    const response = await notion.pages.retrieve({ page_id: pageId });
-    return new Response(JSON.stringify(response));
+router.get("/database/:id", async({params, query}) => {
+    const database_id = params.id;
+    const workspace_id = query.id;
+    // @ts-ignore as vars are in wrangler env
+    const token = await NOTIONAUTH.get(workspace_id);
+
+    const notion = new Client({ auth: token });
+
+    const response = await notion.databases.query({
+        database_id: database_id,
+        filter: {
+          or: [
+          ]
+        },
+        sorts: [
+          {
+            property: 'Last ordered',
+            direction: 'ascending',
+          },
+        ],
+      });   
+
+      return new Response(JSON.stringify(response));
 });
 
 addEventListener("fetch", (event:FetchEvent) => {
