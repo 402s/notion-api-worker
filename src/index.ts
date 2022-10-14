@@ -80,8 +80,11 @@ router.get("/callback", async ({query}) => {
 
 
 // Take search request and seperate id and pass to query
-router.get("/search", async() => {
-    const notion = new Client({ auth: "" });
+router.get("/search", async({query}) => {
+    const workspace_id = query.id;
+    // @ts-ignore as vars are in wrangler env
+    const token = await NOTIONAUTH.get(workspace_id);
+    const notion = new Client({ auth: token });
     const response = await notion.search({
     query: "",
     sort: {
