@@ -8,15 +8,42 @@ interface IMethods {
   other: Route
 }
 
+interface User {
+    object: "user"
+    id: string
+    type?: string
+    name?: string
+    avatar_url?: string
+
+}
+interface NotionResponse {
+    access_token: string
+    workspace_id: string
+    workspace_name: string
+    workspace_icon: string
+    bot_id: string
+    owner: User
+}
+
+interface NotionError {
+    error: string
+}
+
+
 const router = Router<Request, IMethods>()
 
 router.get("/", () => { 
     return new Response(`Hello Wooooooorld!`)
 })
-    
+
+router.get("/login", () => { 
+    //@ts-ignore as vars are in wrangler env
+    // return Response.redirect(Redirect_URI, 301) // Commenting while edge updates
+    return Response.redirect("https://api.notion.com/v1/oauth/authorize?client_id=821734af-9bf0-47d8-bfbd-0c2f14efb15f&response_type=code", 301)
+ });
 
 router.get("/callback", async ({query}) => {
-    const response = await fetch("https://api.notion.com/v1/oauth/token", {
+    const response:(NotionResponse|NotionError) = await fetch("https://api.notion.com/v1/oauth/token", {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
@@ -40,14 +67,21 @@ router.get("/callback", async ({query}) => {
         console.log("Error");
         return JSON.stringify(error);
     });
-    return new Response(JSON.stringify(response.error));
+
+    // Store the access_token in KV with key as the workspace_id
+    // @ts-ignore as vars are in wrangler env
+    const KV = new KVNamespace("NOTION_TOKENS");
+
+    if("access_token" in response) {
+        await KV.put(response.workspace_id, response.access_token);
+        return new Response("Success! You can close this tab now.")
+    } else {
+        return new Response("Error: " + response.error)
+    }
+
+    return new Response(JSON.stringify(response));
 });
 
-router.get("/login", () => { 
-    //@ts-ignore as vars are in wrangler env
-    // return Response.redirect(Redirect_URI, 301) // Commenting while edge updates
-    return Response.redirect("https://api.notion.com/v1/oauth/authorize?client_id=821734af-9bf0-47d8-bfbd-0c2f14efb15f&response_type=code", 301)
- });
 
 // Take search request and seperate id and pass to query
 router.get("/search", async() => {
