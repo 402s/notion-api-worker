@@ -6,3 +6,12 @@ route = "notion.402.app/api/"
 
 [vars]
 API_TOKEN = "example_dev_token"
+Client_ID = "example_client_id"
+Client_Secret = "example_client_secret"
+
+[env.production]
+name = "notion-api-worker"
+
+[env.production.vars]
+Client_ID = "example_prod_token"
+Client_Secret = "example_prod_token"
