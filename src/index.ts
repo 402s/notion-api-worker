@@ -69,17 +69,13 @@ router.get("/callback", async ({query}) => {
     });
 
     // Store the access_token in KV with key as the workspace_id
-    // @ts-ignore as vars are in wrangler env
-    const KV = new KVNamespace("NOTION_TOKENS");
-
     if("access_token" in response) {
-        await KV.put(response.workspace_id, response.access_token);
+        // @ts-ignore as vars are in wrangler env
+        await NOTIONAUTH.put(response.workspace_id, response.access_token);
         return new Response("Success! You can close this tab now.")
     } else {
         return new Response("Error: " + response.error)
     }
-
-    return new Response(JSON.stringify(response));
 });
 
 
@@ -104,7 +100,6 @@ router.get("/page/:id", async(request: Request) => {
     const response = await notion.pages.retrieve({ page_id: pageId });
     return new Response(JSON.stringify(response));
 });
-
 
 addEventListener("fetch", (event:FetchEvent) => {
   event.respondWith(router.handle(event.request))
