@@ -9361,13 +9361,7 @@ export type GetSelfParameters = Record<string, never>
 
 export type GetSelfResponse = UserObjectResponse
 
-export const getSelf = {
-  method: "get",
-  pathParams: [],
-  queryParams: [],
-  bodyParams: [],
-  path: (): string => `users/me`,
-} as const
+
 
 type GetUserPathParameters = {
   user_id: IdRequest
@@ -9377,13 +9371,6 @@ export type GetUserParameters = GetUserPathParameters
 
 export type GetUserResponse = UserObjectResponse
 
-export const getUser = {
-  method: "get",
-  pathParams: ["user_id"],
-  queryParams: [],
-  bodyParams: [],
-  path: (p: GetUserPathParameters): string => `users/${p.user_id}`,
-} as const
 
 type ListUsersQueryParameters = {
   start_cursor?: string
@@ -9401,13 +9388,7 @@ export type ListUsersResponse = {
   results: Array<UserObjectResponse>
 }
 
-export const listUsers = {
-  method: "get",
-  pathParams: [],
-  queryParams: ["start_cursor", "page_size"],
-  bodyParams: [],
-  path: (): string => `users`,
-} as const
+
 
 type CreatePageBodyParameters =
   | {
@@ -9644,13 +9625,6 @@ export type CreatePageParameters = CreatePageBodyParameters
 
 export type CreatePageResponse = PageObjectResponse | PartialPageObjectResponse
 
-export const createPage = {
-  method: "post",
-  pathParams: [],
-  queryParams: [],
-  bodyParams: ["parent", "properties", "icon", "cover", "content", "children"],
-  path: (): string => `pages`,
-} as const
 
 type GetPagePathParameters = {
   page_id: IdRequest
@@ -9660,13 +9634,7 @@ export type GetPageParameters = GetPagePathParameters
 
 export type GetPageResponse = PageObjectResponse | PartialPageObjectResponse
 
-export const getPage = {
-  method: "get",
-  pathParams: ["page_id"],
-  queryParams: [],
-  bodyParams: [],
-  path: (p: GetPagePathParameters): string => `pages/${p.page_id}`,
-} as const
+
 
 type UpdatePagePathParameters = {
   page_id: IdRequest
@@ -9858,13 +9826,7 @@ export type UpdatePageParameters = UpdatePagePathParameters &
 
 export type UpdatePageResponse = PageObjectResponse | PartialPageObjectResponse
 
-export const updatePage = {
-  method: "patch",
-  pathParams: ["page_id"],
-  queryParams: [],
-  bodyParams: ["properties", "icon", "cover", "archived"],
-  path: (p: UpdatePagePathParameters): string => `pages/${p.page_id}`,
-} as const
+
 
 type GetPagePropertyPathParameters = {
   page_id: IdRequest
@@ -9883,14 +9845,6 @@ export type GetPagePropertyResponse =
   | PropertyItemObjectResponse
   | PropertyItemListResponse
 
-export const getPageProperty = {
-  method: "get",
-  pathParams: ["page_id", "property_id"],
-  queryParams: ["start_cursor", "page_size"],
-  bodyParams: [],
-  path: (p: GetPagePropertyPathParameters): string =>
-    `pages/${p.page_id}/properties/${p.property_id}`,
-} as const
 
 type GetBlockPathParameters = {
   block_id: IdRequest
@@ -9900,13 +9854,6 @@ export type GetBlockParameters = GetBlockPathParameters
 
 export type GetBlockResponse = PartialBlockObjectResponse | BlockObjectResponse
 
-export const getBlock = {
-  method: "get",
-  pathParams: ["block_id"],
-  queryParams: [],
-  bodyParams: [],
-  path: (p: GetBlockPathParameters): string => `blocks/${p.block_id}`,
-} as const
 
 type UpdateBlockPathParameters = {
   block_id: IdRequest
@@ -10097,44 +10044,6 @@ export type UpdateBlockResponse =
   | PartialBlockObjectResponse
   | BlockObjectResponse
 
-export const updateBlock = {
-  method: "patch",
-  pathParams: ["block_id"],
-  queryParams: [],
-  bodyParams: [
-    "embed",
-    "type",
-    "archived",
-    "bookmark",
-    "image",
-    "video",
-    "pdf",
-    "file",
-    "audio",
-    "code",
-    "equation",
-    "divider",
-    "breadcrumb",
-    "table_of_contents",
-    "link_to_page",
-    "table_row",
-    "heading_1",
-    "heading_2",
-    "heading_3",
-    "paragraph",
-    "bulleted_list_item",
-    "numbered_list_item",
-    "quote",
-    "to_do",
-    "toggle",
-    "template",
-    "callout",
-    "synced_block",
-    "table",
-  ],
-  path: (p: UpdateBlockPathParameters): string => `blocks/${p.block_id}`,
-} as const
-
 type DeleteBlockPathParameters = {
   block_id: IdRequest
 }
@@ -10145,13 +10054,6 @@ export type DeleteBlockResponse =
   | PartialBlockObjectResponse
   | BlockObjectResponse
 
-export const deleteBlock = {
-  method: "delete",
-  pathParams: ["block_id"],
-  queryParams: [],
-  bodyParams: [],
-  path: (p: DeleteBlockPathParameters): string => `blocks/${p.block_id}`,
-} as const
 
 type ListBlockChildrenPathParameters = {
   block_id: IdRequest
@@ -10174,14 +10076,7 @@ export type ListBlockChildrenResponse = {
   results: Array<PartialBlockObjectResponse | BlockObjectResponse>
 }
 
-export const listBlockChildren = {
-  method: "get",
-  pathParams: ["block_id"],
-  queryParams: ["start_cursor", "page_size"],
-  bodyParams: [],
-  path: (p: ListBlockChildrenPathParameters): string =>
-    `blocks/${p.block_id}/children`,
-} as const
+
 
 type AppendBlockChildrenPathParameters = {
   block_id: IdRequest
@@ -10201,14 +10096,7 @@ export type AppendBlockChildrenResponse = {
   results: Array<PartialBlockObjectResponse | BlockObjectResponse>
 }
 
-export const appendBlockChildren = {
-  method: "patch",
-  pathParams: ["block_id"],
-  queryParams: [],
-  bodyParams: ["children"],
-  path: (p: AppendBlockChildrenPathParameters): string =>
-    `blocks/${p.block_id}/children`,
-} as const
+
 
 type GetDatabasePathParameters = {
   database_id: IdRequest
@@ -10220,13 +10108,7 @@ export type GetDatabaseResponse =
   | PartialDatabaseObjectResponse
   | DatabaseObjectResponse
 
-export const getDatabase = {
-  method: "get",
-  pathParams: ["database_id"],
-  queryParams: [],
-  bodyParams: [],
-  path: (p: GetDatabasePathParameters): string => `databases/${p.database_id}`,
-} as const
+
 
 type UpdateDatabasePathParameters = {
   database_id: IdRequest
@@ -10365,22 +10247,6 @@ export type UpdateDatabaseResponse =
   | PartialDatabaseObjectResponse
   | DatabaseObjectResponse
 
-export const updateDatabase = {
-  method: "patch",
-  pathParams: ["database_id"],
-  queryParams: [],
-  bodyParams: [
-    "title",
-    "description",
-    "icon",
-    "cover",
-    "properties",
-    "is_inline",
-    "archived",
-  ],
-  path: (p: UpdateDatabasePathParameters): string =>
-    `databases/${p.database_id}`,
-} as const
 
 type QueryDatabasePathParameters = {
   database_id: IdRequest
@@ -10433,14 +10299,6 @@ export type QueryDatabaseResponse = {
   results: Array<PageObjectResponse | PartialPageObjectResponse>
 }
 
-export const queryDatabase = {
-  method: "post",
-  pathParams: ["database_id"],
-  queryParams: [],
-  bodyParams: ["sorts", "filter", "start_cursor", "page_size", "archived"],
-  path: (p: QueryDatabasePathParameters): string =>
-    `databases/${p.database_id}/query`,
-} as const
 
 type ListDatabasesQueryParameters = {
   start_cursor?: string
@@ -10458,13 +10316,7 @@ export type ListDatabasesResponse = {
   results: Array<PartialDatabaseObjectResponse | DatabaseObjectResponse>
 }
 
-export const listDatabases = {
-  method: "get",
-  pathParams: [],
-  queryParams: ["start_cursor", "page_size"],
-  bodyParams: [],
-  path: (): string => `databases`,
-} as const
+
 
 type CreateDatabaseBodyParameters = {
   parent: { page_id: IdRequest; type?: "page_id" }
@@ -10562,21 +10414,7 @@ export type CreateDatabaseResponse =
   | PartialDatabaseObjectResponse
   | DatabaseObjectResponse
 
-export const createDatabase = {
-  method: "post",
-  pathParams: [],
-  queryParams: [],
-  bodyParams: [
-    "parent",
-    "properties",
-    "icon",
-    "cover",
-    "title",
-    "description",
-    "is_inline",
-  ],
-  path: (): string => `databases`,
-} as const
+
 
 type SearchBodyParameters = {
   sort?: {
@@ -10605,13 +10443,7 @@ export type SearchResponse = {
   >
 }
 
-export const search = {
-  method: "post",
-  pathParams: [],
-  queryParams: [],
-  bodyParams: ["sort", "query", "start_cursor", "page_size", "filter"],
-  path: (): string => `search`,
-} as const
+
 
 type CreateCommentBodyParameters =
   | {
@@ -10626,13 +10458,7 @@ export type CreateCommentResponse =
   | CommentObjectResponse
   | PartialCommentObjectResponse
 
-export const createComment = {
-  method: "post",
-  pathParams: [],
-  queryParams: [],
-  bodyParams: ["parent", "rich_text", "discussion_id"],
-  path: (): string => `comments`,
-}
+
 
 type ListCommentsQueryParameters = {
   block_id: IdRequest
@@ -10650,14 +10476,6 @@ export type ListCommentsResponse = {
   has_more: boolean
   results: Array<CommentObjectResponse>
 }
-
-export const listComments = {
-  method: "get",
-  pathParams: [],
-  queryParams: ["block_id", "start_cursor", "page_size"],
-  bodyParams: [],
-  path: (): string => `comments`,
-} as const
 
 export interface Caches {
   default: {
