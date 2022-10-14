@@ -43,14 +43,6 @@ router.get("/callback", async ({query}) => {
     return new Response(JSON.stringify(response.error));
 });
 
-router.post("/dev/callback", async (request: Request) => {
-    const url = new URL(request.url)
-    const code = url.searchParams.get("code")
-    console.log(code)
-
-    return Response.redirect("http://localhost:8787/callback?code=" + code, 302);
-});
-
 router.get("/login", () => { 
     //@ts-ignore as vars are in wrangler env
     return Response.redirect(Redirect_URI, 301)
