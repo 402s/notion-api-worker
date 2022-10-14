@@ -45,7 +45,8 @@ router.get("/callback", async ({query}) => {
 
 router.get("/login", () => { 
     //@ts-ignore as vars are in wrangler env
-    return Response.redirect(Redirect_URI, 301)
+    // return Response.redirect(Redirect_URI, 301) // Commenting while edge updates
+    return Response.redirect("https://api.notion.com/v1/oauth/authorize?client_id=821734af-9bf0-47d8-bfbd-0c2f14efb15f&response_type=code", 301)
  });
 
 // Take search request and seperate id and pass to query
