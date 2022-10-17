@@ -121,6 +121,44 @@ router.get("/database/:id", async({params, query}) => {
       return new Response(JSON.stringify(response));
 });
 
+router.get("/page/retrieve/:id", async({params, query}) => {
+    const database_id = params.id;
+    const workspace_id = query.id;
+    // @ts-ignore as vars are in wrangler env
+    const token = await NOTIONAUTH.get(workspace_id);
+
+    const notion = new Client({ auth: token });
+
+    const response = await notion.pages.retrieve({
+        page_id: database_id,
+        });
+
+
+      return new Response(JSON.stringify(response));
+});
+
+router.get("/page/update/:id", async({params, query}) => {
+    const database_id = params.id;
+    const workspace_id = query.id;
+    // @ts-ignore as vars are in wrangler env
+    const token = await NOTIONAUTH.get(workspace_id);
+
+    const notion = new Client({ auth: token });
+
+    const response = await notion.pages.update({
+        page_id: database_id,
+        properties: {
+            'Last ordered': {
+                date: {
+                    start: new Date().toISOString().split('T')[0],
+                },
+            },
+        },
+        });
+
+        return new Response(JSON.stringify(response))
+    });
+
 addEventListener("fetch", (event:FetchEvent) => {
   event.respondWith(router.handle(event.request))
 })
