@@ -1,6 +1,7 @@
 
 
 // This route is where we handle the callbacks from Notion both on initial login and on getting the permanent token.
+// Perhaps we can add better handling to compensate for Notion's abysmal codes.
 export default async function convertToken(query) {
     const response:(NotionResponse|NotionError) = await fetch("https://api.notion.com/v1/oauth/token", {
         method: "POST",
