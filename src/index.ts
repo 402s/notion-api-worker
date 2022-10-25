@@ -2,6 +2,7 @@ import { Router, Route, Request } from "itty-router"
 import { Client } from "@notionhq/client";
 
 import login from "./routes/login"
+import convertToken from "./routes/callback"
 
 
 interface IMethods {
@@ -43,39 +44,7 @@ router.get("/login", () => {
  });
 
 router.get("/callback", async ({query}) => {
-    const response:(NotionResponse|NotionError) = await fetch("https://api.notion.com/v1/oauth/token", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-             //@ts-ignore as vars are in wrangler env
-            "Authorization": "Basic " + JSON.stringify(btoa(Client_ID + ":" + Client_Secret))
-        },
-        redirect: "follow",
-        body: JSON.stringify({
-            "grant_type": "authorization_code",
-            "code": query.code,
-        })
-    }).then((response) => {  
-        console.log("Success");
-        return response.json();
-    }).then((data)=> {
-        console.log(data);
-        console.log("Success2");
-        return(data)
-    }).catch((error) => {
-        // console.log(error);
-        console.log("Error");
-        return JSON.stringify(error);
-    });
-
-    // Store the access_token in KV with key as the workspace_id
-    if("access_token" in response) {
-        // @ts-ignore as vars are in wrangler env
-        await NOTIONAUTH.put(response.workspace_id, response.access_token);
-        return new Response("Success! You can close this tab now.")
-    } else {
-        return new Response("Error: " + response.error)
-    }
+    convertToken(query);
 });
 
 

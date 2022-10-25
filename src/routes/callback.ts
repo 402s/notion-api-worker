@@ -1,7 +1,7 @@
 
 
 // This route is where we handle the callbacks from Notion both on initial login and on getting the permanent token.
-export default async function login() {
+export default async function convertToken(query) {
     const response:(NotionResponse|NotionError) = await fetch("https://api.notion.com/v1/oauth/token", {
         method: "POST",
         headers: {
@@ -15,15 +15,10 @@ export default async function login() {
             "code": query.code,
         })
     }).then((response) => {  
-        console.log("Success");
         return response.json();
     }).then((data)=> {
-        console.log(data);
-        console.log("Success2");
         return(data)
     }).catch((error) => {
-        // console.log(error);
-        console.log("Error");
         return JSON.stringify(error);
     });
 
@@ -46,6 +41,15 @@ interface NotionResponse {
     workspace_icon: string
     bot_id: string
     owner: User
+}
+
+interface User {
+    object: "user"
+    id: string
+    type?: string
+    name?: string
+    avatar_url?: string
+
 }
 
 interface NotionError {
