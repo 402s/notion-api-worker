@@ -3,6 +3,7 @@ import { Client } from "@notionhq/client";
 
 import login from "./routes/login"
 import convertToken from "./routes/callback"
+import search from "./routes/search";
 
 
 interface IMethods {
@@ -18,18 +19,6 @@ interface User {
     name?: string
     avatar_url?: string
 
-}
-interface NotionResponse {
-    access_token: string
-    workspace_id: string
-    workspace_name: string
-    workspace_icon: string
-    bot_id: string
-    owner: User
-}
-
-interface NotionError {
-    error: string
 }
 
 
@@ -53,16 +42,8 @@ router.get("/search", async({query}) => {
     const workspace_id = query.id;
     // @ts-ignore as vars are in wrangler env
     const token = await NOTIONAUTH.get(workspace_id);
-    const notion = new Client({ auth: token });
-    const response = await notion.search({
-    query: "",
-    sort: {
-        direction: "ascending",
-        timestamp: "last_edited_time",
-    },
-    });
-    console.log(response);
-    return new Response(JSON.stringify(response.results));
+    const notionClient = new Client({ auth: token})
+    search(query, notionClient)
 })
 
 router.get("/database/:id", async({params, query}) => {
